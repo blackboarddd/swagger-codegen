@@ -4,6 +4,7 @@ import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
 import io.swagger.codegen.languages.AbstractJavaCodegen;
+import io.swagger.codegen.utils.DictionaryUtils;
 import io.swagger.codegen.utils.ImplementationVersion;
 import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
@@ -22,7 +23,7 @@ import java.util.*;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
-    protected CodegenConfig config;
+    public CodegenConfig config;
     protected ClientOptInput opts;
     protected Swagger swagger;
     protected CodegenIgnoreProcessor ignoreProcessor;
@@ -529,6 +530,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                             if (written != null) {
                                 files.add(written);
                             }
+                            //Add dictionary
+                            DictionaryUtils dictionaryUtils = DictionaryUtils.getDictionaryUtils();
+                            String moduleFolder = config.modelFileFolder();
+                            Map<String, Object> dictOperation = dictionaryUtils.processFromOperation(operation, moduleFolder);
+                            dictionaryUtils.writeToDictionary(this, dictOperation);
+//                            System.out.println(dictionaryUtils.getContents(this, dictOperation, "component.mustache"));
                     	}
                     	//Map<String, Object> testMap = new HashMap<String, Object>();
                         

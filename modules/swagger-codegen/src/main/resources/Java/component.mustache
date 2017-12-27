@@ -1,0 +1,42 @@
+{{#operations}}{{#operation}}<component id="{{dictId}}" name="{{operationIdCamelCase}}Action">
+<action use="action">
+<configuration-variables>
+{{#allParams}}<variable id="{{dictId}}" is-required="{{#required}}yes{{/required}}{{^required}}no{{/required}}">{{#defaultDictValue}}<default>{{defaultDictValue}}</default>{{/defaultDictValue}}</variable>
+{{/allParams}}
+</configuration-variables>
+<initialization-variables/>
+<input-variables/>
+<output-variables>
+{{#returnType}}{{#returnParam}}<variable id="{{dictId}}"/>{{/returnParam}}{{/returnType}}
+<variable id="A64L797T3ATL82MZY4H1490872002385"/>
+</output-variables>
+<return-values>
+<return-value id="{{dictOk}}" std-code="ok" user-code="3" user-code-alias="" user-code-type="constant">
+<brief>HTTP request and response successfully;</brief>
+</return-value>
+<return-value id="{{dictAbort}}" std-code="fail" user-code="" user-code-alias="" user-code-type="none">
+<brief>Request sent or received meeting error;</brief>
+</return-value>
+<return-value id="{{dictFail}}" std-code="abort" user-code="" user-code-alias="" user-code-type="none">
+<brief>User's input parameters have something wrong</brief>
+</return-value>
+</return-values>
+</action>
+<brief>{{notes}}</brief>
+<contacts>
+</contacts>
+<description>
+ * Function: {{notes}}
+ * API: {{invokerPackage}}.action.{{operationIdCamelCase}}
+ * Input parameters:
+{{#allParams}}		"{{paramName}}": {{{dataType}}}{{#required}}, required{{/required}}. {{description}}
+{{/allParams}}
+ * Return parameters:
+		"rest{{returnType}}": {{returnType}}.
+		"STR_INPUT_JSON": JSON String, used for CheckServerJson to verify json result
+</description>
+<implementation prog-id="{{invokerPackage}}.action.{{operationIdCamelCase}}Action">
+<source-code file="{{operationIdCamelCase}}Action.java" location="\Yati\Actions\java\com\microstrategy\yatiactions\rest\model"/>
+</implementation>
+</component>
+{{/operation}}{{/operations}}

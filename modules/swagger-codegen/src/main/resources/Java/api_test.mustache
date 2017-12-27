@@ -61,7 +61,7 @@ public class {{operationIdCamelCase}}Action extends Action{
 		state.put("strInputJson", response.toJson());
 		{{/returnType}}
 		Utils.logMessage("Info", "{{message}}", actionContext);
-		return EnumYatiTestResults.Ok;
+		return EnumYatiTestResults.Ok + 3;
 		{{/isDefault}}{{/responses}}
      {{/operation}}{{/operations}}    
     }    

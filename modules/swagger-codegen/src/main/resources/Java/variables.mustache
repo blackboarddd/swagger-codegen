@@ -1,0 +1,12 @@
+<root>
+{{#operations}}{{#operation}}{{#allParams}}{{#dictIdForCreation}}
+<variable id="{{dictIdForCreation}}" name="{{paramName}}" type="{{dictType}}">
+<brief>{{description}}</brief>
+<description>{{description}}</description>
+</variable>{{/dictIdForCreation}}{{/allParams}}{{#returnParam}}{{#dictIdForCreation}}
+<variable id="{{dictIdForCreation}}" name="{{paramName}}" type="{{dictType}}">
+<brief>{{description}}</brief>
+<description>{{description}}</description>
+</variable>{{/dictIdForCreation}}{{/returnParam}}
+{{/operation}}{{/operations}} 
+</root>
