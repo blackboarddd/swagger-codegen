@@ -1,0 +1,2 @@
+Parameter
+generate -l java -i D:\Automation\Swagger\swagger.yaml -o D:\Automation\Swagger\tmp -Dapis -Dmodels --model-package com.microstrategy.yatiactions.rest.model --api-package com.microstrategy.yatiactions.rest.api
