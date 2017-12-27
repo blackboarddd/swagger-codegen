@@ -58,7 +58,7 @@ public class {{operationIdCamelCase}}Action extends Action{
 		{{#responses}}{{#isDefault}}
 		{{#returnType}}state.put("rest{{returnType}}", response);{{/returnType}}
 		Utils.logMessage("Info", "{{message}}", actionContext);
-		return EnumYatiTestResults.Ok;
+		return EnumYatiTestResults.Ok + 3;
 		{{/isDefault}}{{/responses}}
      {{/operation}}{{/operations}}    
     }    

@@ -2229,10 +2229,13 @@ public class DefaultCodegen {
                 if(p.defaultTestValue == null) {
                 	if(p.isBoolean) {
                 		p.defaultTestValue = "false";
+                		p.defaultDictValue = "false";
                 	}else if(p.isNumeric || p.isNumber || p.isInteger || p.isLong || p.isDouble || p.isFloat) {
                 		p.defaultTestValue = "-1";
+                		p.defaultDictValue = "-1";
                 	}else {
                 		p.defaultTestValue = "null";
+                		p.defaultDictValue = null;
                 	}
                 }
                 allParams.add(p);

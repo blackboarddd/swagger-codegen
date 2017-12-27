@@ -10,7 +10,7 @@ public class CodegenParameter {
             isCookieParam, isBodyParam, hasMore, isContainer,
             secondaryParam, isCollectionFormatMulti, isPrimitiveType;
     public String baseName, paramName, dataType, datatypeWithEnum, dataFormat,
-          collectionFormat, description, unescapedDescription, baseType, defaultValue, defaultTestValue, enumName;
+          collectionFormat, description, unescapedDescription, baseType, defaultValue, defaultTestValue, defaultDictValue, enumName;
 
     public String example; // example value (x-example)
     public String jsonSchema;
@@ -23,7 +23,7 @@ public class CodegenParameter {
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public boolean hasValidation;
-
+    public String dictIdForCreation, dictId, dictType;
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
      * this property is required and its value MUST be true. Otherwise, the property
@@ -115,7 +115,6 @@ public class CodegenParameter {
         output.multipleOf = this.multipleOf;
         output.jsonSchema = this.jsonSchema;
         output.defaultValue = this.defaultValue;
-        output.defaultTestValue = this.defaultValue;
         output.example = this.example;
         output.isEnum = this.isEnum;
         if (this._enum != null) {
