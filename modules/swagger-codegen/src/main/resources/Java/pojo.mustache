@@ -188,7 +188,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
   public String toJSON() {
     StringBuilder sb = new StringBuilder();
     sb.append("{ ");
-    {{#parent}}sb.append("\"parent\":\"").append({{parent}}.toString()).append("\"").append(", ");{{/parent}}
+    {{#parent}}sb.append("\"parent\":\"").append(toIndentedString(super.toString())).append("\"").append(", ");{{/parent}}
     {{#vars}}sb.append("\"{{name}}\":\"").append(toIndentedString({{name}})).append("\"").append(", ");
     {{/vars}}sb.append("\"end\":\"end\"}");
     return sb.toString();

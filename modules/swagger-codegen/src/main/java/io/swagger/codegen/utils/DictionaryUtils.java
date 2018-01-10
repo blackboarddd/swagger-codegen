@@ -77,7 +77,7 @@ public class DictionaryUtils {
 	
 	
 	//Get data parsed by mustache
-	private String getContents(DefaultGenerator dg, Map<String, Object> templateData, String templateName) throws IOException {
+	private String getContents(final DefaultGenerator dg, Map<String, Object> templateData, String templateName) throws IOException {
 		String templateFile = dg.getFullTemplateFile(dg.config, templateName); 
 		String template = dg.readTemplate(templateFile);
 		Mustache.Compiler compiler = Mustache.compiler();
