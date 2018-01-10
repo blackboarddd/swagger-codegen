@@ -104,13 +104,15 @@ public class DictionaryUtils {
 		co.dictAbort = generateGUID();
 		co.dictOk = generateGUID();
 		co.dictFail = generateGUID();
-		co.dictId = generateGUID();
 		List<CodegenParameter> listParams = co.allParams;
 		for (CodegenParameter cp : listParams) {
 			cp = transferDataType(cp);
 			cp = verifyVariableExisting(cp, allExistingVariables);
 		}
-		removeExistingComponet(co);
+		co.dictId = removeExistingComponet(co);
+		if(co.dictId == null){
+			co.dictId = generateGUID();
+		}
 		if(null != co.returnType) {
 			CodegenParameter returnParam = constructReturnParam(co, moduleFolder + "/" + co.returnType + ".java");
 			returnParam = transferDataType(returnParam);
@@ -224,14 +226,16 @@ public class DictionaryUtils {
 		return map;
 	}
 	
-	private Document removeExistingComponet(CodegenOperation co) {
+	private String removeExistingComponet(CodegenOperation co) {
 		String actionName = co.operationIdCamelCase + "Action";
 		String xpath = "//module[@name = 'Rest Api']/component[@name='" + actionName + "']";
 		Node node = document.selectSingleNode(xpath);
+		String nodeId = null;
 		if(null != node) {
+			nodeId = node.valueOf("@id");
 			node.getParent().remove(node);
 		}
-		return document;
+		return nodeId;
 	}
 
 	/**
