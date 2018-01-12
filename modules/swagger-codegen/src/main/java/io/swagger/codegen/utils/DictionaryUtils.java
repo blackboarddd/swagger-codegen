@@ -101,18 +101,12 @@ public class DictionaryUtils {
 		allExistingVariables = storeVariablesInRestApi();
 		HashMap<String, Object> mapOperations = (HashMap<String, Object>) operation.get("operations");
 		CodegenOperation co = (CodegenOperation) mapOperations.get("operation");
-		co.dictAbort = generateGUID();
-		co.dictOk = generateGUID();
-		co.dictFail = generateGUID();
 		List<CodegenParameter> listParams = co.allParams;
 		for (CodegenParameter cp : listParams) {
 			cp = transferDataType(cp);
 			cp = verifyVariableExisting(cp, allExistingVariables);
 		}
-		co.dictId = removeExistingComponet(co);
-		if(co.dictId == null){
-			co.dictId = generateGUID();
-		}
+		removeExistingComponet(co);
 		if(null != co.returnType) {
 			CodegenParameter returnParam = constructReturnParam(co, moduleFolder + "/" + co.returnType + ".java");
 			returnParam = transferDataType(returnParam);
@@ -226,16 +220,26 @@ public class DictionaryUtils {
 		return map;
 	}
 	
-	private String removeExistingComponet(CodegenOperation co) {
+	//lizhu: if node exists, populate the co with existing node IDs, otherwise generate the IDs.
+	private void removeExistingComponet(CodegenOperation co) {
 		String actionName = co.operationIdCamelCase + "Action";
 		String xpath = "//module[@name = 'Rest Api']/component[@name='" + actionName + "']";
 		Node node = document.selectSingleNode(xpath);
-		String nodeId = null;
 		if(null != node) {
-			nodeId = node.valueOf("@id");
+			co.dictId = node.valueOf("@id");
+			String OkXpath = xpath + "/action/return-values/return-value[@std-code='ok']";
+			String FailXpath = xpath + "/action/return-values/return-value[@std-code='fail']";
+			String AbortXpath = xpath + "/action/return-values/return-value[@std-code='abort']";
+			co.dictOk = document.selectSingleNode(OkXpath).valueOf("@id");
+			co.dictFail = document.selectSingleNode(FailXpath).valueOf("@id");
+			co.dictAbort = document.selectSingleNode(AbortXpath).valueOf("@id");
 			node.getParent().remove(node);
+		}else{
+			co.dictId = generateGUID();
+			co.dictOk = generateGUID();
+			co.dictFail = generateGUID();
+			co.dictAbort = generateGUID();
 		}
-		return nodeId;
 	}
 
 	/**
