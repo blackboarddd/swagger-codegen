@@ -525,7 +525,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     	for(CodegenOperation co : list) {
                     		//check whether we need to ignore the operation's action creation
                     		if(ignoreOperationList.contains(co.operationIdLowerCase)){
-                    			LOGGER.info("Action for Operation \"" + co.operationId + "\" is ignored");
+                    			LOGGER.info("Ignore action for Operation \"" + co.operationId + "\".");
                     			continue;
                     		}
                     		HashMap<String, Object> tmp = new HashMap<String, Object>();
@@ -561,7 +561,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                        
                     }
                 }
-            	LOGGER.info("Actions have been added into Java Dictionary: Java.ydic under Z:\\Yati\\Dictionaries.");
+            	LOGGER.info("Actions are added into Java Dictionary: Java.ydic under Z:\\Yati\\Dictionaries.");
 
                 if (generateApiDocumentation) {
                     // to generate api documentation files

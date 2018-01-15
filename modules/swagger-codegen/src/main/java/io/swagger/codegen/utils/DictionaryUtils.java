@@ -20,6 +20,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
@@ -69,10 +70,12 @@ public class DictionaryUtils {
 					}
 				}
 			}
-		}		
-         XMLWriter writer = new XMLWriter(new FileWriter(dictPath)); 
-         writer.write(document); 
-         writer.close();
+		}	
+		OutputFormat xmlFormat = OutputFormat.createPrettyPrint();
+		xmlFormat.setEncoding("utf-8");
+        XMLWriter writer = new XMLWriter(new FileWriter(dictPath), xmlFormat); 
+        writer.write(document); 
+        writer.close();
 	}
 	
 	

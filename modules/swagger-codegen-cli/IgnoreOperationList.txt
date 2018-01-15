@@ -2,7 +2,7 @@
 # Lines beginning with a # are comments
 
 # we don't need this one, because we do some customization for this action.
-getpropertysetsfromdocumentinstancemessages
+CreateSession
 
 
 
