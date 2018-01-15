@@ -2,7 +2,7 @@
 Created on Dec 27, 2017
 
 @author: bizhu
-p = os.popen(str)
+@author: lizhu
 '''
 import os
 import sys
