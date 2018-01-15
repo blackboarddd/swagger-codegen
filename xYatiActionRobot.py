@@ -23,5 +23,6 @@ def runcommand():
 	os.system(str)
 	print("\n!Generation is Finished! Files are placed in folder \"" + OutPutFolderName +"\".")
 	print("!Dictionary Java.ydic has been updated with new actions.")
+	raw_input("!Finished.")
     
 runcommand()
