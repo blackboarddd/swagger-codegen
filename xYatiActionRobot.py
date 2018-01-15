@@ -5,8 +5,6 @@ Created on Dec 27, 2017
 @author: lizhu
 '''
 import os
-import sys
-import subprocess
 
 def runcommand():
 	print("*** Tool will generate xYati Actions for REST API.             ***")
@@ -23,6 +21,7 @@ def runcommand():
 	str = "java -jar swagger-codegen-cli.jar generate -l java -i " + YAMLFileName + " -o " + OutPutFolderName + " -Dapis -Dmodels --model-package com.microstrategy.yatiactions.rest.model --api-package com.microstrategy.yatiactions.rest.api "
 	print(str)
 	os.system(str)
-	print("\n!!!Generation is Finished! Files are placed in folder \"" + OutPutFolderName +"\".")
+	print("\n!Generation is Finished! Files are placed in folder \"" + OutPutFolderName +"\".")
+	print("!Dictionary Java.ydic has been updated with new actions.")
     
 runcommand()
