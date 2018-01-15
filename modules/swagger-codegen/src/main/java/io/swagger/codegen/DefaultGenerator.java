@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
@@ -39,7 +41,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private String basePathWithoutHost;
     private String contextPath;
     private Map<String, String> generatorPropertyDefaults = new HashMap<>();
-
+    private List<String> ignoreOperationList = new ArrayList<>();
+    
+    public static final String ignoreOperationFilePath = "IgnoreOperationList.txt";
+    
     @Override
     public Generator opts(ClientOptInput opts) {
         this.opts = opts;
@@ -448,6 +453,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
             paths = updatedPaths;
         }
+        
+        readIgnoreOperations();
+        
         for (String tag : paths.keySet()) {
             try {
                 List<CodegenOperation> ops = paths.get(tag);
@@ -515,6 +523,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     	HashMap<String, Object> tmpoperations = (HashMap<String, Object>) operation.get("operations");
                     	ArrayList<CodegenOperation> list = (ArrayList<CodegenOperation>)tmpoperations.get("operation");
                     	for(CodegenOperation co : list) {
+                    		//check whether we need to ignore the operation's action creation
+                    		if(ignoreOperationList.contains(co.operationIdLowerCase)){
+                    			LOGGER.info("Action for Operation \"" + co.operationId + "\" is ignored");
+                    			continue;
+                    		}
                     		HashMap<String, Object> tmp = new HashMap<String, Object>();
                     		for(Iterator it = operation.keySet().iterator() ; it.hasNext();){
                     			String key = it.next().toString();
@@ -548,7 +561,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                        
                     }
                 }
-            	LOGGER.info("\n\n    Actions have been added into Java Dictionary: Java.ydic under Z:\\Yati\\Dictionaries.\n");
+            	LOGGER.info("Actions have been added into Java Dictionary: Java.ydic under Z:\\Yati\\Dictionaries.");
 
                 if (generateApiDocumentation) {
                     // to generate api documentation files
@@ -577,7 +590,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     }
 
-    private void generateSupportingFiles(List<File> files, Map<String, Object> bundle) {
+	private void generateSupportingFiles(List<File> files, Map<String, Object> bundle) {
         if (!generateSupportingFiles) {
             return;
         }
@@ -1073,4 +1086,31 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.postProcessModels(objs);
         return objs;
     }
+    
+    // read the ignore operation list from file
+    private void readIgnoreOperations() {
+		java.nio.file.Path path =Paths.get(ignoreOperationFilePath);
+		if(Files.exists(path)){
+			List<String> lines;
+			try {
+				lines = Files.readAllLines(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				throw new RuntimeException("Read file " + path.toAbsolutePath().toString() + " meet exception.");
+			}
+			LOGGER.info("Ignore operations are read from file: " + ignoreOperationFilePath);
+			for(String operation: lines){
+				// remove the space in line beginning
+				// ignore the line start with "#" which stands the comment
+				// add the line into ignoreList
+				operation = operation.trim();
+				if(operation.isEmpty() || operation.startsWith("#")){
+					continue;
+				}
+				ignoreOperationList.add(operation.toLowerCase());
+			}
+		} else{
+			LOGGER.info("No ingore operation file can be fould in current file path, so no operation will be ignored.");
+		}
+	}
 }
