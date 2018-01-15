@@ -548,7 +548,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                        
                     }
                 }
-
+            	LOGGER.info("\n\n    Actions have been added into Java Dictionary: Java.ydic under Z:\\Yati\\Dictionaries.\n");
 
                 if (generateApiDocumentation) {
                     // to generate api documentation files
